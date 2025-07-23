@@ -66,38 +66,38 @@
     <form>
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" /><br />
-      
+      <section id="email">
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" /><br />
-      
+      <section id="password">
       <label>Password:</label>
       <input type="password" /><br />
-      
+      <section id="Gender">
       <label>Gender:</label>
       <input type="radio" name="gender" value="male" /> Male
       <input type="radio" name="gender" value="female" /> Female<br />
-      
+      <section id="Hobbies">
       <label>Hobbies:</label>
       <input type="checkbox" /> Reading
       <input type="checkbox" /> Coding<br />
-      
+      <section id="color">
       <label for="color">Favorite Color:</label>
       <input type="color" id="color" /><br />
-      
+      <section id="dob">
       <label for="dob">DOB:</label>
       <input type="date" id="dob" /><br />
-
+      <section id="file">
       <label for="file">Upload File:</label>
       <input type="file" id="file" /><br />
-
+      <section id ="country">
       <label for="country">Country:</label>
       <select id="country">
         <option>India</option>
         <option>USA</option>
       </select><br />
-
+      <section id="table">
       <textarea rows="3" cols="30">Type here...</textarea><br />
-
+      <section id ="submit">
       <button type="submit">Submit</button>
       <input type="reset" />
     </form>
