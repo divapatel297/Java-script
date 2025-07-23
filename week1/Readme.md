@@ -1,1 +1,1 @@
-Javascript Re[pository
+Javascript Repository
