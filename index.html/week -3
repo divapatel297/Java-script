@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #121212;
+            color: white;
+            text-align: center;
+            padding-top: 60px;
+        }
+
+        .game-container {
+            width: 350px;
+            margin: auto;
+            padding: 30px;
+            background: #1e1e1e;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 25px;
+            background: #04c45c;
+            border: none;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #03a54d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game-container">
+        <h1>Number Guessing Game</h1>
+        <p>Guess a number between <strong>1 to 100</strong></p>
+
+        <input type="number" id="userInput" placeholder="Enter your guess">
+        <button onclick="checkGuess()">Submit</button>
+
+        <p id="message"></p>
+        <p id="attempts"></p>
+    </div>
+
+    <script>
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        document.getElementById("attempts").innerText = "Attempts: 0";
+
+        function checkGuess() {
+            let guess = Number(document.getElementById("userInput").value);
+            attempts++;
+
+            // while loop
+            while (guess < 1 || guess > 100) {
+                document.getElementById("message").innerHTML = "Please enter a number between 1 and 100.";
+                return;
+            }
+
+            // if else
+            if (guess === secretNumber) {
+                document.getElementById("message").innerHTML =
+                    `🎉 Correct! You guessed the number in ${attempts} attempts.`;
+            } else if (guess > secretNumber) {
+                document.getElementById("message").innerHTML = "Too High! Try again.";
+            } else {
+                document.getElementById("message").innerHTML = "Too Low! Try again.";
+            }
+
+            document.getElementById("attempts").innerText = "Attempts: " + attempts;
+
+            // switch example
+            switch (attempts) {
+                case 5:
+                    console.log("Hint: Try guessing smaller numbers!");
+                    break;
+                case 10:
+                    console.log("Hint: Getting close!");
+                    break;
+            }
+        }
+
+        // do-while
+        let count = 0;
+        do {
+            console.log("Welcome to Number Guessing Game!");
+            count++;
+        } while (count < 1);
+
+        // for loop
+        for (let i = 1; i <= 3; i++) {
+            console.log("Game Loaded: " + i);
+        }
+    </script>
+
+</body>
+</html>
