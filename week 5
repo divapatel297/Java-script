@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Student Grade Tracker</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #222;
+            color: white;
+            text-align: center;
+            padding-top: 30px;
+        }
+        .box {
+            background: #333;
+            width: 330px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 5px;
+            border-radius: 6px;
+            border: none;
+        }
+        button {
+            padding: 8px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 6px;
+            background: #1ec971;
+            color: white;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            margin-top: 12px;
+        }
+        td, th {
+            padding: 6px;
+            border-bottom: 1px solid #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>Student Grade Tracker</h2>
+
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="number" id="marks" placeholder="Enter Marks">
+
+        <button onclick="addStudent()">Add</button>
+        <button onclick="showPass()">Passed</button>
+        <button onclick="makeGrades()">Grades</button>
+
+        <div id="result"></div>
+    </div>
+
+<script>
+
+    // SIMPLE ARRAY OF STUDENTS
+    let students = [];
+
+    // ADD A STUDENT (Object + Push)
+    function addStudent() {
+        let n = document.getElementById("name").value;
+        let m = Number(document.getElementById("marks").value);
+
+        if (n === "" || m < 0 || m > 100) {
+            alert("Enter valid data!");
+            return;
+        }
+
+        students.push({ name: n, marks: m });
+        display(students);
+    }
+
+    // DISPLAY ARRAY USING forEach
+    function display(arr) {
+        let table = `
+            <table>
+                <tr><th>Name</th><th>Marks</th><th>Grade</th></tr>
+        `;
+
+        arr.forEach(s => {
+            table += `
+                <tr>
+                    <td>${s.name}</td>
+                    <td>${s.marks}</td>
+                    <td>${s.grade ? s.grade : "-"}</td>
+                </tr>
+            `;
+        });
+
+        table += `</table>`;
+        document.getElementById("result").innerHTML = table;
+    }
+
+    // FILTER — SHOW ONLY PASSED STUDENTS
+    function showPass() {
+        let pass = students.filter(s => s.marks >= 33);
+        display(pass);
+    }
+
+    // MAP — ADD GRADE PROPERTY
+    function makeGrades() {
+        let graded = students.map(s => {
+            let g = "";
+
+            if (s.marks >= 90) g = "A+";
+            else if (s.marks >= 75) g = "A";
+            else if (s.marks >= 60) g = "B";
+            else if (s.marks >= 33) g = "C";
+            else g = "Fail";
+
+            return { ...s, grade: g };
+        });
+
+        display(graded);
+    }
+
+</script>
+
+</body>
+</html>
