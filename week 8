@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merged Project: Digital Clock & Stopwatch</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f0f0;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .box {
+        background: white;
+        padding: 20px;
+        margin: 20px auto;
+        width: 320px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #ccc;
+    }
+
+    h2 {
+        margin-bottom: 15px;
+    }
+
+    .time {
+        font-size: 32px;
+        margin: 10px 0;
+    }
+
+    button {
+        padding: 10px 15px;
+        margin: 5px;
+        border: none;
+        background: royalblue;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button.stop {
+        background: crimson;
+    }
+
+    #timeoutMsg {
+        margin-top: 10px;
+        color: green;
+        font-size: 16px;
+    }
+</style>
+</head>
+<body>
+
+<!-- DIGITAL CLOCK -->
+<div class="box">
+    <h2>Digital Clock</h2>
+    <div id="clock" class="time">00:00:00</div>
+</div>
+
+<!-- STOPWATCH -->
+<div class="box">
+    <h2>Stopwatch</h2>
+    <div id="stopwatch" class="time">00:00:00</div>
+
+    <button id="startBtn">Start</button>
+    <button id="stopBtn" class="stop">Stop</button>
+    <button id="resetBtn">Reset</button>
+</div>
+
+<!-- SET TIMEOUT DEMO -->
+<div class="box">
+    <h2>setTimeout Demo</h2>
+    <p>Message will appear after 3 seconds...</p>
+    <p id="timeoutMsg"></p>
+</div>
+
+<script>
+    /* ---------------- DIGITAL CLOCK ---------------- */
+    function updateClock() {
+        let now = new Date();
+
+        let h = now.getHours().toString().padStart(2, "0");
+        let m = now.getMinutes().toString().padStart(2, "0");
+        let s = now.getSeconds().toString().padStart(2, "0");
+
+        document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    /* ---------------- STOPWATCH ---------------- */
+    let sec = 0, min = 0, hr = 0;
+    let stopwatchInterval;
+
+    function updateStopwatch() {
+        sec++;
+        if (sec == 60) { sec = 0; min++; }
+        if (min == 60) { min = 0; hr++; }
+
+        document.getElementById("stopwatch").textContent =
+            `${hr.toString().padStart(2, "0")}:` +
+            `${min.toString().padStart(2, "0")}:` +
+            `${sec.toString().padStart(2, "0")}`;
+    }
+
+    document.getElementById("startBtn").onclick = function () {
+        if (!stopwatchInterval) {
+            stopwatchInterval = setInterval(updateStopwatch, 1000);
+        }
+    };
+
+    document.getElementById("stopBtn").onclick = function () {
+        clearInterval(stopwatchInterval);
+        stopwatchInterval = null;
+    };
+
+    document.getElementById("resetBtn").onclick = function () {
+        clearInterval(stopwatchInterval);
+        stopwatchInterval = null;
+        sec = 0; min = 0; hr = 0;
+        document.getElementById("stopwatch").textContent = "00:00:00";
+    };
+
+    /* ---------------- SET TIMEOUT DEMO ---------------- */
+    setTimeout(function () {
+        document.getElementById("timeoutMsg").textContent =
+            "Hello! This message appeared after 3 seconds.";
+    }, 3000);
+</script>
+
+</body>
+</html>
