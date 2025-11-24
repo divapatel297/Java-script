@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes App (Persistent)</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .container {
+        max-width: 400px;
+        background: #fff;
+        padding: 20px;
+        margin: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #ccc;
+    }
+
+    textarea {
+        width: 100%;
+        height: 80px;
+        padding: 10px;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 10px 15px;
+        border: none;
+        background: royalblue;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .note {
+        background: #e9e9e9;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        text-align: left;
+        position: relative;
+    }
+
+    .delete {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        background: crimson;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Notes App</h2>
+
+    <textarea id="noteInput" placeholder="Write your note..."></textarea>
+    <button id="addBtn">Add Note</button>
+
+    <div id="notesContainer"></div>
+</div>
+
+<script>
+    let notes = [];
+
+    // Load existing notes from localStorage when page opens
+    if (localStorage.getItem("notes")) {
+        notes = JSON.parse(localStorage.getItem("notes"));  // converting string → array
+        displayNotes();
+    }
+
+    document.querySelector("#addBtn").onclick = function () {
+        let noteText = document.querySelector("#noteInput").value.trim();
+
+        if (noteText === "") {
+            alert("Please write a note!");
+            return;
+        }
+
+        notes.push(noteText);
+
+        // Save updated array to localStorage
+        localStorage.setItem("notes", JSON.stringify(notes));  // array → string
+
+        displayNotes();
+        document.querySelector("#noteInput").value = "";
+    };
+
+    function displayNotes() {
+        const container = document.querySelector("#notesContainer");
+        container.innerHTML = "";
+
+        notes.forEach((note, index) => {
+            let div = document.createElement("div");
+            div.className = "note";
+            div.innerHTML = `
+                ${note}
+                <span class="delete" onclick="deleteNote(${index})">X</span>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function deleteNote(i) {
+        notes.splice(i, 1);             // remove one note
+        localStorage.setItem("notes", JSON.stringify(notes));  // save new array
+        displayNotes();
+    }
+</script>
+
+</body>
+</html>
