@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter | Diploma Student Project</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .box {
+            width: 350px;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+
+        select, input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 30px;
+            background: #00c853;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #00a847;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: #222;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>Unit Converter</h2>
+
+        <input type="number" id="value" placeholder="Enter value">
+
+        <select id="unitFrom">
+            <option value="cm">Centimeter</option>
+            <option value="m">Meter</option>
+            <option value="km">Kilometer</option>
+        </select>
+
+        <select id="unitTo">
+            <option value="cm">Centimeter</option>
+            <option value="m">Meter</option>
+            <option value="km">Kilometer</option>
+        </select>
+
+        <button onclick="convert()">Convert</button>
+
+        <div class="result" id="output"></div>
+    </div>
+
+<script>
+
+    // -------------------------------
+    // GLOBAL VARIABLE EXAMPLE
+    // -------------------------------
+    let lastResult = 0;  // Global scope variable
+
+    // -------------------------------
+    // FUNCTION DECLARATION (with return)
+    // Converts any unit to meter
+    // -------------------------------
+    function toMeter(value, fromUnit) {
+        let meterValue = 0; // Local scope variable
+
+        if (fromUnit === "cm") meterValue = value / 100;
+        else if (fromUnit === "m") meterValue = value;
+        else if (fromUnit === "km") meterValue = value * 1000;
+
+        return meterValue; // returning function value
+    }
+
+    // -------------------------------
+    // FUNCTION EXPRESSION
+    // Converts meter to required unit
+    // -------------------------------
+    const fromMeter = function(value, toUnit) {
+        if (toUnit === "cm") return value * 100;
+        if (toUnit === "m") return value;
+        if (toUnit === "km") return value / 1000;
+    };
+
+    // -------------------------------
+    // ARROW FUNCTION
+    // Show result on screen
+    // -------------------------------
+    const showResult = (convertedValue) => {
+        document.getElementById("output").innerHTML =
+            `Converted Value: <b>${convertedValue}</b>`;
+    };
+
+    // -------------------------------
+    // MAIN CONVERSION FUNCTION
+    // -------------------------------
+    function convert() {
+        let val = Number(document.getElementById("value").value);
+        let fromUnit = document.getElementById("unitFrom").value;
+        let toUnit = document.getElementById("unitTo").value;
+
+        if (isNaN(val) || val <= 0) {
+            document.getElementById("output").innerHTML = "Enter valid value!";
+            return;
+        }
+
+        // Step 1: Convert to meter (function return)
+        let meterValue = toMeter(val, fromUnit);
+
+        // Step 2: Convert meter to target
+        let finalValue = fromMeter(meterValue, toUnit);
+
+        // Step 3: Use arrow function to display result
+        showResult(finalValue);
+
+        // Modify global variable
+        lastResult = finalValue;
+        console.log("Last result stored globally: ", lastResult);
+    }
+
+</script>
+
+</body>
+</html>
