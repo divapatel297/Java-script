@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Form Validator</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 30px;
+    }
+    .container {
+        max-width: 400px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #ccc;
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background: royalblue;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Contact Form</h2>
+
+    <form id="contactForm">
+        <label>Name:</label>
+        <input type="text" id="name">
+        <p id="nameError" class="error"></p>
+
+        <label>Email:</label>
+        <input type="text" id="email">
+        <p id="emailError" class="error"></p>
+
+        <label>Message:</label>
+        <textarea id="message" rows="4"></textarea>
+        <p id="messageError" class="error"></p>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    const form = document.querySelector("#contactForm");
+
+    form.onsubmit = function(event) {
+        event.preventDefault();  // Stop page refresh
+
+        let name = document.querySelector("#name").value.trim();
+        let email = document.querySelector("#email").value.trim();
+        let message = document.querySelector("#message").value.trim();
+
+        let valid = true;
+
+        // Clear previous error messages
+        document.querySelector("#nameError").textContent = "";
+        document.querySelector("#emailError").textContent = "";
+        document.querySelector("#messageError").textContent = "";
+
+        // Name validation
+        if (name === "") {
+            document.querySelector("#nameError").textContent = "Name is required";
+            valid = false;
+        }
+
+        // Email validation (simple check)
+        if (email === "") {
+            document.querySelector("#emailError").textContent = "Email is required";
+            valid = false;
+        } else if (!email.includes("@") || !email.includes(".")) {
+            document.querySelector("#emailError").textContent = "Enter a valid email";
+            valid = false;
+        }
+
+        // Message validation
+        if (message.length < 5) {
+            document.querySelector("#messageError").textContent = "Message must be at least 5 characters";
+            valid = false;
+        }
+
+        // If valid
+        if (valid) {
+            alert("Form Submitted Successfully!");
+            form.reset();
+        }
+    }
+</script>
+
+</body>
+</html>
