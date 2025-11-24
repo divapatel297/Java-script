@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 380px;
+            background: #fff;
+            padding: 20px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 75%;
+            padding: 10px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: royalblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        ul {
+            margin-top: 20px;
+            padding: 0;
+        }
+
+        li {
+            background: #e9e9e9;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .delete {
+            background: crimson;
+            padding: 4px 10px;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>To-Do List</h2>
+
+    <input type="text" id="taskInput" placeholder="Enter task...">
+    <button id="addBtn">Add</button>
+
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+    const addBtn = document.querySelector("#addBtn");
+    const taskInput = document.querySelector("#taskInput");
+    const taskList = document.querySelector("#taskList");
+
+    addBtn.addEventListener("click", function () {
+        let task = taskInput.value.trim();
+
+        if (task === "") {
+            alert("Please enter a task!");
+            return;
+        }
+
+        let li = document.createElement("li");
+        li.innerHTML = `${task} <span class="delete">X</span>`;
+        taskList.appendChild(li);
+
+        taskInput.value = "";
+
+        li.querySelector(".delete").addEventListener("click", function () {
+            li.remove();
+        });
+    });
+</script>
+
+</body>
+</html>
